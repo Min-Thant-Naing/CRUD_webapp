@@ -1,74 +1,145 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transaction Records</title>
     <style>
-        body {
-            background: linear-gradient(to right, #f6d365, #fda085);
-            color: #333;
-        }
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+        background-color: #f5f5f7;
+        color: #1d1d1f;
+      }
 
-        .container {
-            border: 2px solid #f6d365;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px auto;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
+      .container {
+        background-color: #fff;
+        max-width: 680px;
+        margin: 40px auto;
+        padding: 30px;
+        border-radius: 16px;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+      }
 
-        .transaction-table {
-            margin-top: 20px;
-        }
+      h1 {
+        text-align: center;
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 24px;
+      }
 
-        .transaction-actions {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 16px;
+      }
 
-        .btn-primary {
-            background-color: #f6d365;
-            border-color: #f6d365;
-        }
+      th,
+      td {
+        text-align: left;
+        padding: 10px 8px;
+        border-bottom: 1px solid #e0e0e0;
+        font-size: 14px;
+      }
 
-        .btn-primary:hover {
-            background-color: #f6d365;
-            border-color: #f6d365;
-        }
+      th {
+        color: #6e6e73;
+        font-weight: 500;
+      }
+
+      .transaction-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .btn {
+        padding: 6px 14px;
+        font-size: 13px;
+        font-weight: 500;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .btn-primary {
+        background-color: #0071e3;
+        color: #fff;
+      }
+
+      .btn-primary:hover {
+        background-color: #005bb5;
+      }
+
+      .btn-danger {
+        background-color: #ff3b30;
+        color: #fff;
+      }
+
+      .btn-danger:hover {
+        background-color: #d32f2f;
+      }
+
+      .btn-success {
+        background-color: #34c759;
+        color: #fff;
+      }
+
+      .btn-success:hover {
+        background-color: #28a745;
+      }
+
+      .add-btn-wrapper {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 24px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <h1 class="text-center">Transaction Records</h1>
+      <h1>Transaction Records</h1>
 
-        <table class="table transaction-table">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Amount</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for transaction in transactions %}
-                <tr>
-                    <td>{{ transaction.date }}</td>
-                    <td>{{ transaction.amount }}</td>
-                    <td class="transaction-actions">
-                        <a class="btn btn-sm btn-primary" href="{{ url_for('edit_transaction', transaction_id=transaction.id) }}">Edit</a>
-                        <a class="btn btn-sm btn-danger" href="{{ url_for('delete_transaction', transaction_id=transaction.id) }}">Delete</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for transaction in transactions %}
+          <tr>
+            <td>{{ transaction.date }}</td>
+            <td>{{ transaction.amount }}</td>
+            <td class="transaction-actions">
+              <a
+                class="btn btn-primary"
+                href="{{ url_for('edit_transaction', transaction_id=transaction.id) }}"
+                >Edit</a
+              >
+              <a
+                class="btn btn-danger"
+                href="{{ url_for('delete_transaction', transaction_id=transaction.id) }}"
+                >Delete</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
 
-        <div class="d-flex justify-content-center">
-            <a class="btn btn-success" href="{{ url_for('add_transaction') }}">Add Transaction</a>
-        </div>
+      <div class="add-btn-wrapper">
+        <a class="btn btn-success" href="{{ url_for('add_transaction') }}">
+          Add Transaction
+        </a>
+        <a class="btn btn-primary" href="{{ url_for('search') }}"> Search </a>
+      </div>
     </div>
-</body>
+  </body>
 </html>
